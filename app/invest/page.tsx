@@ -92,7 +92,7 @@ const VERDICT_CONFIG = {
 
 export default function InvestPage() {
   const [zones, setZones] = useState<ZoneOption[]>([]);
-  const [selectedZone, setSelectedZone] = useState("");
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
 
   // 입력값
   const [매입가, set매입가] = useState("");
@@ -169,8 +169,8 @@ export default function InvestPage() {
           {/* 구역 선택 */}
           <div>
             <Label className="text-xs font-medium">참고 구역 (선택)</Label>
-            <Select value={selectedZone} onValueChange={(v) => setSelectedZone(v ?? "")}>
-              <SelectTrigger className="mt-1.5">
+            <Select value={selectedZone} onValueChange={(v) => setSelectedZone(v)}>
+              <SelectTrigger className="mt-1.5 w-full">
                 <SelectValue placeholder="구역을 선택하면 평당가 참고" />
               </SelectTrigger>
               <SelectContent>

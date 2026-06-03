@@ -67,7 +67,7 @@ export default function ImportPage() {
   const [loading, setLoading] = useState(true);
 
   // Form state
-  const [selectedZone, setSelectedZone] = useState<string>("");
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [fromYear, setFromYear] = useState(String(CURRENT_YEAR - 1));
   const [fromMonth, setFromMonth] = useState("01");
   const [toYear, setToYear] = useState(String(CURRENT_YEAR));
@@ -207,9 +207,9 @@ export default function ImportPage() {
                 </Label>
                 <Select
                   value={selectedZone}
-                  onValueChange={(v) => setSelectedZone(v ?? "")}
+                  onValueChange={(v) => setSelectedZone(v)}
                 >
-                  <SelectTrigger className="bg-white">
+                  <SelectTrigger className="bg-white w-full">
                     <SelectValue placeholder="구역을 선택하세요" />
                   </SelectTrigger>
                   <SelectContent>

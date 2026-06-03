@@ -42,7 +42,7 @@ interface ZoneOption {
 
 export default function EvaluatePage() {
   const [zones, setZones] = useState<ZoneOption[]>([]);
-  const [selectedZone, setSelectedZone] = useState("");
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [areaPyeong, setAreaPyeong] = useState("");
   const [yearBuilt, setYearBuilt] = useState("");
   const [floor, setFloor] = useState("");
@@ -81,7 +81,7 @@ export default function EvaluatePage() {
     }
   };
 
-  const canEvaluate = selectedZone && areaPyeong && askingPrice;
+  const canEvaluate = !!selectedZone && !!areaPyeong && !!askingPrice;
   const selectedZoneData = zones.find((z) => z.id === Number(selectedZone));
 
   return (
@@ -100,8 +100,8 @@ export default function EvaluatePage() {
         <CardContent className="pt-6 space-y-4">
           <div>
             <Label className="text-xs font-medium">구역 선택 *</Label>
-            <Select value={selectedZone} onValueChange={(v) => setSelectedZone(v ?? "")}>
-              <SelectTrigger className="mt-1.5">
+            <Select value={selectedZone} onValueChange={(v) => setSelectedZone(v)}>
+              <SelectTrigger className="mt-1.5 w-full">
                 <SelectValue placeholder="구역을 선택하세요" />
               </SelectTrigger>
               <SelectContent>
@@ -167,7 +167,11 @@ export default function EvaluatePage() {
           <Button
             onClick={evaluate}
             disabled={!canEvaluate || loading}
-            className="w-full text-base py-6 gradient-primary border-0 shadow-lg shadow-primary/25 hover:opacity-90 transition-opacity"
+            className={`w-full text-base py-6 border-0 transition-all ${
+              canEvaluate && !loading
+                ? "gradient-primary shadow-lg shadow-primary/25 hover:opacity-90 cursor-pointer"
+                : "bg-muted text-muted-foreground cursor-not-allowed"
+            }`}
             size="lg"
           >
             {loading ? (
